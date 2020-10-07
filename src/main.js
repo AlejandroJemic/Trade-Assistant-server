@@ -9,10 +9,6 @@ import {
   runRetransmiter
 } from "./bitmex/bitmex.re-transmiter";
 
-import {
-  getInspectApis
-} from "./bitmex/bitmex.api-provider"
-
 var app = require('express')();
 
 
@@ -30,8 +26,6 @@ global.apiKeySecret = 'M79Q8zsrfRtynF3XKYRHWvwVQfNyseezXRGrYuHVBsn0b4l9';
 
 runBitmexWSocketClient();
 runRetransmiter();
-
-getInspectApis();
 
 // #endregion 
 

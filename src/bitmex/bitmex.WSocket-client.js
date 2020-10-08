@@ -21,4 +21,14 @@ export const runBitmexWSocketClient = function () {
         // console.log(`Got update from bitmex for ${tableName}:${symbol}. Data:\n${JSON.stringify(data)}`);
         global.Actualdata = data[data.length - 1];
     });
+
+    // client.addStream('XBTUSD', 'order', function (data, symbol, tableName) {
+    //     //console.log(`Got update from bitmex for ${tableName}:${symbol}. Data:\n${JSON.stringify(data)}`);
+    //     global.orders = data;
+    // });
+
+    // client.addStream('XBTUSD', 'position', function (data, symbol, tableName) {
+    //     //console.log(`Got update from bitmex for ${tableName}:${symbol}. Data:\n${JSON.stringify(data)}`);
+    //     global.position = data;
+    // });
 };

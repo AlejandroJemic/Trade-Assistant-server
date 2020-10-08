@@ -18,6 +18,8 @@ global.PORT = process.env.PORT || 3000;
 global.Actualdata;
 global.apiKeyID = 'qd5kyzuwgThbolZKHEMpvFv7';
 global.apiKeySecret = 'M79Q8zsrfRtynF3XKYRHWvwVQfNyseezXRGrYuHVBsn0b4l9';
+global.orders;
+global.positions;
 
 // #endregion
 

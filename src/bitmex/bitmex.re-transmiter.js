@@ -12,6 +12,10 @@ var prevPositions = global.positions;
 export const runRetransmiter = function () {
     io.on('connection', (socket) => {
         console.log('a user connected');
+        if(global.orders){
+            console.log('sending oders' );
+            socket.emit('odersupdate', global.orders);
+        }
 
         emitQuoteUpdate(socket);
         emitOrdersUpdate(socket);
@@ -30,7 +34,7 @@ export const runRetransmiter = function () {
 function emitQuoteUpdate(socket) {
     setInterval(function () {
         if (JSON.stringify(global.Actualdata) !== JSON.stringify(prev)) {
-            // console.log('sending dataupdate');
+            // console.log('sending quoteupdate');
             socket.emit('quoteupdate', global.Actualdata);
             prev = global.Actualdata;
         } else {
@@ -54,7 +58,7 @@ function emitPositionsUpdate(socket) {
 function emitOrdersUpdate(socket) {
     setInterval(function () {
         if (JSON.stringify(global.orders) !== JSON.stringify(prevOrders)) {
-            // console.log('sending dataupdate');
+            //console.log('sending odersupdate');
             socket.emit('odersupdate', global.orders);
             prevOrders = global.orders;
         } else {

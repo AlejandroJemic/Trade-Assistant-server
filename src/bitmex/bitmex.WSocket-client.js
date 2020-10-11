@@ -4,6 +4,12 @@ const BitMEXClient = require('bitmex-realtime-api');
 // el addstream quote obtiene los datos del precio actual
 // la data del precio se esta guardando en global.Actualdata
 
+var localStorage;
+if (typeof localStorage === "undefined" || localStorage === null) {
+    var LocalStorage = require('node-localstorage').LocalStorage;
+    localStorage = new LocalStorage('./_LocalStorage');
+  }
+
 export const runBitmexWSocketClient = function () {
     // See 'options' reference below
     const client = new BitMEXClient({
@@ -19,16 +25,20 @@ export const runBitmexWSocketClient = function () {
 
     client.addStream('XBTUSD', 'quote', function (data, symbol, tableName) {
         // console.log(`Got update from bitmex for ${tableName}:${symbol}. Data:\n${JSON.stringify(data)}`);
+        //console.log('quote updated');
         global.Actualdata = data[data.length - 1];
     });
 
-    // client.addStream('XBTUSD', 'order', function (data, symbol, tableName) {
-    //     //console.log(`Got update from bitmex for ${tableName}:${symbol}. Data:\n${JSON.stringify(data)}`);
-    //     global.orders = data;
-    // });
+    client.addStream('XBTUSD', 'order', function (data, symbol, tableName) {
+        //console.log(`Got update from bitmex for ${tableName}:${symbol}. Data:\n${JSON.stringify(data)}`);
+        console.log('order updated');
+        global.orders = data;
+        localStorage.setItem('orders', JSON.stringify(global.orders));
+    });
 
     // client.addStream('XBTUSD', 'position', function (data, symbol, tableName) {
-    //     //console.log(`Got update from bitmex for ${tableName}:${symbol}. Data:\n${JSON.stringify(data)}`);
+    //     console.log(`Got update from bitmex for ${tableName}:${symbol}. Data:\n${JSON.stringify(data)}`);
     //     global.position = data;
+    //     localStorage.setItem('positions', JSON.stringify(global.positions));
     // });
 };

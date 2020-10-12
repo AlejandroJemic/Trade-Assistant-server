@@ -58,7 +58,7 @@ function emitPositionsUpdate(socket) {
 function emitOrdersUpdate(socket) {
     setInterval(function () {
         if (JSON.stringify(global.orders) !== JSON.stringify(prevOrders)) {
-            //console.log('sending odersupdate');
+            console.log('sending odersupdate');
             socket.emit('odersupdate', global.orders);
             prevOrders = global.orders;
         } else {

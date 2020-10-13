@@ -2,6 +2,11 @@ import {
   router
 } from './router';
 
+
+import {
+  getInspectApis
+} from './bitmex/bitmex.api-provider';
+
 import {
   runBitmexWSocketClient
 } from "./bitmex/bitmex.WSocket-client";
@@ -44,6 +49,7 @@ if (typeof positions !== "undefined" && positions !== null){
 runBitmexWSocketClient();
 runRetransmiter();
 
+// getInspectApis();
 // #endregion 
 
 

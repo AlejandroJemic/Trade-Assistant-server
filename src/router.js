@@ -1,7 +1,7 @@
 import express from 'express';
 
 import {
-  getMargin
+  getMargin, cancelOrder
 } from './bitmex/bitmex.api-provider';
 
 var localStorage;
@@ -34,11 +34,17 @@ function deleteOrder(orderId){
   }
 }
 
+function addHeaders(res){
+  res.header('Access-Control-Allow-Origin', "*");
+  res.header('Access-Control-Allow-Headers', "*");
+  return res;
+}
+
 export const router = express.Router();
 
 // server alive
 router.get('/ping', (req, res) => {
-  console.log('GET /');
+  console.log('GET /ping');
   res.json({
     msg: `bitmex rest api is  runing on port ${global.PORT}`,
   });
@@ -61,9 +67,15 @@ router.get('/margin', (req, res) => {
 
 router.get('/deleteOrder/:orderId', function (req, res) {
   console.log('GET /deleteOrder ' + req.params.orderId);
-  res.header('Access-Control-Allow-Origin', "*");
-  res.header('Access-Control-Allow-Headers', "*");
+  res = addHeaders(res);
   res.json( deleteOrder(req.params.orderId) );
+})
+
+router.get('/cancelOrder/:orderId', async function (req, res) {
+  console.log('GET /cancelOrder ' + req.params.orderId);
+  res = addHeaders(res);
+  var returned = await cancelOrder(req.params.orderId)
+  res.json( returned );
 })
 
 

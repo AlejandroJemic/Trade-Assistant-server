@@ -33,7 +33,9 @@ export const runBitmexWSocketClient = function () {
         //console.log(`Got update from bitmex for ${tableName}:${symbol}. Data:\n${JSON.stringify(data)}`);
         console.log('order updated');
         global.orders = data;
+        global.lastOrderTimeStamp = new Date();
         localStorage.setItem('orders', JSON.stringify(global.orders));
+        localStorage.setItem('lastOrderTimeStamp',  JSON.stringify(global.lastOrderTimeStamp));
     });
 
     // client.addStream('XBTUSD', 'position', function (data, symbol, tableName) {

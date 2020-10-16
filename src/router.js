@@ -13,6 +13,13 @@ if (typeof localStorage === "undefined" || localStorage === null) {
 
 function deleteOrder(orderId){
   try {
+    
+      if (!global.deletedOrders.includes(orderId)){
+        global.deletedOrders.push(orderId);
+        localStorage.setItem('deletedOrders', JSON.stringify(global.deletedOrders));
+        console.log('new deletedOrder ' + orderId)
+      }
+     
     var orders = localStorage.getItem('orders');
     if (typeof orders !== "undefined" && orders !== null){
       global.orders = JSON.parse(orders).filter((order) => { return order.orderID !== orderId; });
@@ -25,6 +32,7 @@ function deleteOrder(orderId){
       };
     }
   } catch (err) {
+    console.log('error deleting order: ' + err )
     return {
       ok: false,
       data: {

@@ -29,6 +29,8 @@ global.Actualdata;
 global.apiKeyID = 'qd5kyzuwgThbolZKHEMpvFv7';
 global.apiKeySecret = 'M79Q8zsrfRtynF3XKYRHWvwVQfNyseezXRGrYuHVBsn0b4l9';
 global.orders;
+global.deletedOrders =[]
+global.lastOrderTimeStamp + new Date();
 global.positions;
 
 // #endregion
@@ -42,6 +44,18 @@ var positions = localStorage.getItem('positions');
 if (typeof positions !== "undefined" && positions !== null){
   console.log('read positions from server local storage')
   global.positions = JSON.parse(positions);
+}
+
+var deletedOrders = localStorage.getItem('deletedOrders');
+if (typeof deletedOrders !== "undefined" && deletedOrders !== null){
+  console.log('read deletedOrders from server local storage')
+  global.deletedOrders = JSON.parse(deletedOrders);
+}
+
+var lastOrderTimeStamp = localStorage.getItem('lastOrderTimeStamp');
+if (typeof lastOrderTimeStamp !== "undefined" && lastOrderTimeStamp !== null){
+  console.log('read lastOrderTimeStamp from server local storage')
+  global.lastOrderTimeStamp = JSON.parse(lastOrderTimeStamp);
 }
 
 // #region BITMEX

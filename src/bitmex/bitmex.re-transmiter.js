@@ -56,11 +56,21 @@ function emitPositionsUpdate(socket) {
 }
 
 function emitOrdersUpdate(socket) {
+    var orders = [];
     setInterval(function () {
         if (JSON.stringify(global.orders) !== JSON.stringify(prevOrders)) {
-            console.log('sending odersupdate');
-            socket.emit('odersupdate', global.orders);
-            prevOrders = global.orders;
+            if (typeof global.deletedOrders !== "undefined" && global.deletedOrders !== null){
+                global.orders.forEach((orderId, index) => {
+                    if(!global.deletedOrders.includes(orderId)){
+                        orders.push(global.orders[index]);
+                    }
+                });
+            }
+            if(orders.length > 0){
+                console.log('sending odersupdate');
+                socket.emit('odersupdate', orders);
+                prevOrders = global.orders;
+            }
         } else {
             // console.log('no updates')
         }
